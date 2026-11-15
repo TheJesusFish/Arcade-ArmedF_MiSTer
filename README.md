@@ -1,14 +1,9 @@
 
 # Nichibutsu M68000 (Armed F) FPGA Implementation — ArmedFMD
 
-> **ArmedFMD** is a quality-of-life update of this core: current MiSTer framework, upstream CPU/sound modules,
-> save states, high-score saving, MAME 0.288 MRAs (parents in `releases/`, every clone in `releases/_alternatives/`,
-> all named `… [MD].mra`, `<rbf>ArmedFMD</rbf>`), vertical games rotated by default, the game's flip screen, and
-> player 2 entirely on the second controller. Release RBF: `releases/Arcade-ArmedFMD_YYYYMMDD.rbf`.
+FPGA compatible core of Nichibutsu M68000 (Terra Force Based) arcade hardware for [**MiSTerFPGA**](https://github.com/MiSTer-devel/Main_MiSTer/wiki) written by **Erin Olafson**. Terra Force PCB (different board revisions) donated by [**@atrac17**](https://twitter.com/_atrac17) / [**@djhardrich**](https://twitter.com/djhardrich). Maintenance and miscellaneous quality of life features added by TheJesusfish
 
-FPGA compatible core of Nichibutsu M68000 (Terra Force Based) arcade hardware for [**MiSTerFPGA**](https://github.com/MiSTer-devel/Main_MiSTer/wiki) written by **Erin Olafson**. Terra Force PCB (different board revisions) donated by [**@atrac17**](https://twitter.com/_atrac17) / [**@djhardrich**](https://twitter.com/djhardrich).
-
-The intent is for this core to be a 1:1 implementation of the Nichibutsu (Terra Force based) 68000 hardware. Currently in an beta state, this core is in active development with assistance from [**atrac17**](https://github.com/atrac17).
+The intent is for this core to be a 1:1 implementation of the Nichibutsu (Terra Force based) 68000 hardware.
 
 <br>
 <img width="" height="" src="https://user-images.githubusercontent.com/32810066/170655863-5b1418f1-1020-46f6-9e72-6ad08ec96b49.png">
@@ -41,7 +36,7 @@ The intent is for this core to be a 1:1 implementation of the Nichibutsu (Terra 
 
 - Layer priority - **Chouji Meikyuu Legion (Japan ver 1.05) [legionj, legionjb]**  
 - Service Menu text layer **NB1414M4** (the Adjustments / Switch Test values are not drawn)  
-- **skyrobobl** has no MRA: its 8748 MCU is undumped (MAME: not working)
+- **skyrobobl** has no MRA: its 8748 MCU is undumped
 
 # PCB Check List
 
@@ -200,7 +195,7 @@ A hidden debug menu can be accessed for all Nichibutsu 68000 (Armed F Based) tit
 
 # Support
 
-Please consider showing support for this and future projects via [**Erin's Ko-fi**](https://ko-fi.com/Erino) and [**atrac17's Patreon**](https://www.patreon.com/atrac17). While it isn't necessary, it's greatly appreciated.
+Please consider showing support for this and thanking Erin by giving to her Kofi: [**Erin's Ko-fi**](https://ko-fi.com/Erino). While it isn't necessary, it's greatly appreciated.
 
 # Licensing
 
