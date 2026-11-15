@@ -1,7 +1,0 @@
-FROM jotego/jtcore-base
-LABEL maintainer=jotego@gmail.com
-
-COPY --from=intelfpga_lite 17.1 /opt/intelFPGA_lite/17.1
-ENV PATH=$PATH:/opt/intelFPGA_lite/17.1/quartus/bin
-
-ENTRYPOINT ["bash"]

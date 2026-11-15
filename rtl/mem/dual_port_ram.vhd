@@ -35,6 +35,7 @@
 
 -- 2022-05-24 Changed to use word count instead of address width
 -- and renamed ports to match quartus IP naming
+-- 2026-11-15 added clock enables clken_a/clken_b
 
 library ieee;
 use ieee.std_logic_1164.all;
@@ -59,13 +60,15 @@ entity dual_port_ram is
     data_a  : in std_logic_vector(DATA_WIDTH-1 downto 0) := (others => '0');
     q_a : out std_logic_vector(DATA_WIDTH-1 downto 0);
     wren_a   : in std_logic := '0';
+    clken_a  : in std_logic := '1';
 
     -- port B
     clock_b  : in std_logic;
     address_b : in unsigned(ilog2(LEN)-1 downto 0);
     data_b  : in std_logic_vector(DATA_WIDTH-1 downto 0) := (others => '0');
     q_b : out std_logic_vector(DATA_WIDTH-1 downto 0);
-    wren_b   : in std_logic := '0'
+    wren_b   : in std_logic := '0';
+    clken_b  : in std_logic := '1'
   );
 end dual_port_ram;
 
@@ -75,8 +78,8 @@ begin
   altsyncram_component : altsyncram
   generic map (
     address_reg_b                 => "CLOCK1",
-    clock_enable_input_a          => "BYPASS",
-    clock_enable_input_b          => "BYPASS",
+    clock_enable_input_a          => "NORMAL",
+    clock_enable_input_b          => "NORMAL",
     clock_enable_output_a         => "BYPASS",
     clock_enable_output_b         => "BYPASS",
     indata_reg_b                  => "CLOCK1",
@@ -105,6 +108,8 @@ begin
     address_b => std_logic_vector(address_b),
     clock0    => clock_a,
     clock1    => clock_b,
+    clocken0  => clken_a,
+    clocken1  => clken_b,
     data_a    => data_a,
     data_b    => data_b,
     wren_a    => wren_a,
