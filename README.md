@@ -19,7 +19,6 @@ The intent is for this core to be a 1:1 implementation of the Nichibutsu (Terra 
 [**Crazy Climber 2**](https://en.wikipedia.org/wiki/Nihon_Bussan)       | Implemented   | **cclimbr2, cclimbr2a**             | NB1414M4 | N/A                     |
 [**Armed F**](https://en.wikipedia.org/wiki/Formation_Armed_F)          | Implemented   | **armedf, armedff**                 | None     | N/A                     |
 [**Sky Robo / Tatakae! Big Fighter**](https://en.wikipedia.org/wiki/Nihon_Bussan)  | Implemented   | **skyrobo, bigfghtr**     | i8751    | N/A                     |
-[**Sky Robo (bootleg)**](https://en.wikipedia.org/wiki/Nihon_Bussan)    | Not supported | **skyrobobl** (no MRA)              | MCU undumped | N/A                 |
 
 ## External Modules
 
