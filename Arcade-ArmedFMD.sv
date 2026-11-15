@@ -348,6 +348,8 @@ reg clk_16M_pause;
 reg ce_16m, ce_6m, ce_4m;
 // CPUs run unless paused or frozen by a save state.
 wire cpu_run = ( ~pause_cpu & ~ss_pause ) | ss_cpu_execute;
+// Sound CPU and OPL2 run unless paused, and always during a save-state sequence.
+wire snd_run = ~pause_cpu | ss_pause;
 
 always @ (posedge clk_sys) begin
     ce_16m <= ( clk16_count == CLKDIV8-1 ) || ( clk16_count == 3 && cpu_run );
@@ -1221,7 +1223,7 @@ always @ (posedge clk_sys) begin
     
     if ( reset == 1 ) begin
         z80_a_irq_n <= 1;
-    end else if ( clk_ym == 1 ) begin
+    end else if ( clk_ym == 1 && snd_run ) begin
         z80_a_irq_n <= 0;
     end 
     
@@ -1949,8 +1951,8 @@ wire M1_a_n;
 T80pa z80_a (
     .RESET_n    ( ~(reset | ss_z80_reset) ),
     .CLK        ( clk_sys ),
-    .CEN_p      (  clk_4M & ~z80a_hold ),
-    .CEN_n      ( ~clk_4M & ~z80a_hold ),
+    .CEN_p      (  clk_4M & ~z80a_hold & snd_run ),
+    .CEN_n      ( ~clk_4M & ~z80a_hold & snd_run ),
     .WAIT_n     ( z80_a_wait_n ), 
     .INT_n      ( z80_a_irq_n ),  
     .NMI_n      ( 1'b1 ),
@@ -2111,7 +2113,7 @@ jtopl #(.OPL_TYPE(2)) opl
 (
     .rst(reset),
     .clk(clk_sys),
-    .cen(ce_4m),
+    .cen( ce_4m & snd_run ),
     .din( opl_replay ? opl_rp_d  : sound_data ),
     .addr( opl_replay ? opl_rp_a0 : sound_addr ),
     .cs_n( opl_replay ? ~opl_rp_we : ~( z80_a_sound0_cs | z80_a_sound1_cs ) ),
