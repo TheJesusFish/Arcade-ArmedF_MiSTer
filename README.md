@@ -24,7 +24,7 @@ The intent is for this core to be a 1:1 implementation of the Nichibutsu (Terra 
 [**Crazy Climber 2**](https://en.wikipedia.org/wiki/Nihon_Bussan)       | Implemented   | **cclimbr2, cclimbr2a**             | NB1414M4 | N/A                     |
 [**Armed F**](https://en.wikipedia.org/wiki/Formation_Armed_F)          | Implemented   | **armedf, armedff**                 | None     | N/A                     |
 [**Sky Robo / Tatakae! Big Fighter**](https://en.wikipedia.org/wiki/Nihon_Bussan)  | Implemented   | **skyrobo, bigfghtr**     | i8751    | N/A                     |
-[**Sky Robo (bootleg)**](https://en.wikipedia.org/wiki/Nihon_Bussan)    | Not working   | **skyrobobl** (MRA provided)        | MCU undumped | N/A                 |
+[**Sky Robo (bootleg)**](https://en.wikipedia.org/wiki/Nihon_Bussan)    | Not supported | **skyrobobl** (no MRA)              | MCU undumped | N/A                 |
 
 ## External Modules
 
@@ -41,7 +41,7 @@ The intent is for this core to be a 1:1 implementation of the Nichibutsu (Terra 
 
 - Layer priority - **Chouji Meikyuu Legion (Japan ver 1.05) [legionj, legionjb]**  
 - Service Menu text layer **NB1414M4** (the Adjustments / Switch Test values are not drawn)  
-- **skyrobobl** needs its undumped 8748 MCU (MAME: not working)
+- **skyrobobl** has no MRA: its 8748 MCU is undumped (MAME: not working)
 
 # PCB Check List
 
@@ -172,8 +172,8 @@ A hidden debug menu can be accessed for all Nichibutsu 68000 (Armed F Based) tit
 > If the cabinet dip is set to table, the screen inverts for player 2 in cocktail mode.<br><br>
 > Default controller mapping (every game): **A** = button 1, **B** = button 2, **Start** = Start, **Select** = Coin,
 > **R** = Pause, **L** = save states (hold **L** + **Down** save, + **Up** restore, + **Left/Right** slot). Button names are
-> taken from the service manuals where one exists (Terra Force: Beam Cannon / Hyper Missile; Armed F: Beam / Reverse; Legion:
-> Beam / Time Bomb), otherwise MAME's generic names (Kozure Ōkami, Sky Robo / Big Fighter: Button 1 / Button 2). The boards'
+> taken from the service manuals and instruction cards (Terra Force: Beam Cannon / Hyper Missile; Armed F: Beam / Reverse;
+> Legion: Beam / Time Bomb; Kozure Ōkami: Slash / Block, both together to jump; Sky Robo / Big Fighter: Beam / Transform). The boards'
 > third input ("PUSH 3" in the switch test) is not used by any game and is not mapped.<br><br>
 > Crazy Climber 2 uses two joysticks: the left stick is the d-pad, the right stick is on **X** (up), **Y** (left), **B** (down)
 > and **A** (right).

@@ -24,7 +24,7 @@
     <dip name="Debug (P1 Start Pause)" bits="15" ids="Off,On" values="1,0"/>
   </switches>
 
-  <buttons names="Button 1,Button 2,-,-,Start,Coin,Pause,-,-,Save/Load" default="A,B,Start,Select,R,L"/>
+  <buttons names="Beam,Transform,-,-,Start,Coin,Pause,-,-,Save/Load" default="A,B,Start,Select,R,L"/>
 
   <rom index="0" zip="skyrobo.zip" md5="749774683091ca08740901c179616ef8">
     <!-- maincpu - starts at 0x0 -->

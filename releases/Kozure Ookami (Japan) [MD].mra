@@ -25,7 +25,7 @@
     <dip name="Infinite Timer (Cheat)" bits="15" ids="No,Yes" values="1,0"/>
   </switches>
 
-  <buttons names="Button 1,Button 2,-,-,Start,Coin,Pause,-,-,Save/Load" default="A,B,Start,Select,R,L"/>
+  <buttons names="Slash,Block,-,-,Start,Coin,Pause,-,-,Save/Load" default="A,B,Start,Select,R,L"/>
 
   <rom index="0" zip="kozure.zip" md5="110443958813ecb6f73622a3ef965bdb">
     <!-- maincpu - starts at 0x0 -->

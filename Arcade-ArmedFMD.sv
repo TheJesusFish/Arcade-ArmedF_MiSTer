@@ -206,6 +206,7 @@ wire  [7:0] ioctl_dout;
 wire  [7:0] ioctl_din;
 
 reg   [3:0] pcb;
+wire        pcb_288 = ( pcb == 4 || pcb == 5 || pcb == 6 || pcb == 7 );   // 288x224 picture (Legion / Crazy Climber 2 boards)
 
 always @(posedge clk_sys) begin
     if (ioctl_wr && (ioctl_index==1)) begin
@@ -448,7 +449,7 @@ video_timing video_timing (
     .clk(clk_sys),
     .clk_pix(ce_6m),
     .reset(1'b0),
-    .pcb(pcb),
+    .h288(pcb_288),
     .hc(hc),
     .vc(vc),
     .hs_offset(hs_offset),
@@ -538,11 +539,10 @@ wire [9:0] tx_x ;
 wire [9:0] tx_y ;
 
 wire [9:0] tile_x_ofs = 10'd85;
-wire [9:0] y_adj = ( pcb > 3 && pcb < 8 ) ? 0 : 8 ;
+wire [9:0] y_adj = pcb_288 ? 10'd0 : 10'd8 ;
 
 // Render counters, mirrored about the visible window when flipped.
-wire       flip_h288 = ( pcb == 4 || pcb == 5 || pcb == 6 || pcb == 7 );
-wire [9:0] vsum      = flip_h288 ? 10'd255 : 10'd271;
+wire [9:0] vsum      = pcb_288 ? 10'd255 : 10'd271;
 wire [9:0] hc_tile   = flip_screen ? 10'd341 - hc : { 1'b0, hc };
 wire [8:0] hc_spr    = flip_screen ? 9'd345 - hc  : hc;
 wire [9:0] vc_tile   = flip_screen ? vsum - vc : { 1'b0, vc };
@@ -1662,7 +1662,7 @@ reg sp_enable;
 
 wire curr_line;
 
-wire [9:0] sprite_y_adj = ( pcb == 4 || pcb == 5 || pcb == 6 || pcb == 7) ? 0 : 128 ;
+wire [9:0] sprite_y_adj = pcb_288 ? 10'd0 : 10'd128 ;
 
 // armedf (2), cclimbr2 (4), legion (5,6,7)
 // big fighter &  kozure (1) is 192 

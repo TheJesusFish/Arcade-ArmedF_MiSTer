@@ -5,7 +5,7 @@ module video_timing
     input       clk_pix,
     input       reset,
 
-    input  [3:0] pcb,
+    input        h288,          // 288x224 picture (Legion / Crazy Climber 2 boards)
     input  signed [3:0] hs_offset,
     input  signed [3:0] vs_offset,
 
@@ -22,7 +22,6 @@ module video_timing
     output reg  vbl 
 );
 
-wire h288 = ( pcb == 4 || pcb == 5 || pcb == 6 || pcb == 7 );
 // 6MHz
 wire [8:0] h_ofs = 0;
 wire [8:0] HBL_START  = h288 ? 288+32 : 320 + 16;
@@ -37,6 +36,32 @@ wire [8:0] VBL_END    = h288 ? 16 : 16;
 wire [8:0] VS_START   = h288 ? 244 : 0;
 wire [8:0] VS_END     = h288 ? 248 : 8;
 wire [8:0] VTOTAL     = 262 ;
+
+// Wraps a signed position into 0..last.
+function [8:0] wrap;
+    input signed [10:0] x;
+    input        [8:0]  last;
+    begin
+        if ( x < 11'sd0 )
+            wrap = x + $signed({2'b00, last}) + 11'sd1;
+        else if ( x > $signed({2'b00, last}) )
+            wrap = x - $signed({2'b00, last}) - 11'sd1;
+        else
+            wrap = x[8:0];
+    end
+endfunction
+
+// Sync edges with the signed OSD adjustments; V-sync stays at least one line long.
+wire signed [10:0] hs_on  = $signed({2'b00, HS_START}) + hs_offset;
+wire signed [10:0] hs_off = $signed({2'b00, HS_END}) + hs_offset + hs_width;
+wire signed [10:0] vs_len = $signed({2'b00, VS_END - VS_START}) + vs_width;
+wire signed [10:0] vs_on  = $signed({2'b00, VS_START}) + vs_offset;
+wire signed [10:0] vs_off = vs_on + ( vs_len < 11'sd1 ? 11'sd1 : vs_len );
+
+wire [8:0] HS_ON  = wrap( hs_on,  HTOTAL );
+wire [8:0] HS_OFF = wrap( hs_off, HTOTAL );
+wire [8:0] VS_ON  = wrap( vs_on,  VTOTAL );
+wire [8:0] VS_OFF = wrap( vs_off, VTOTAL );
 
 reg [8:0] v;
 reg [8:0] h;
@@ -81,15 +106,15 @@ always @ (posedge clk) begin
             vbl <= 0;
         end
    
-        if ( v == (VS_START + $signed(vs_offset) ) ) begin
+        if ( v == VS_ON ) begin
             vsync <= 1;
-        end else if ( v == (VS_END + $signed(vs_offset) + $signed(vs_width) ) ) begin
+        end else if ( v == VS_OFF ) begin
             vsync <= 0;
         end
 
-        if ( h == (HS_START + $signed(hs_offset) ) ) begin
+        if ( h == HS_ON ) begin
             hsync <= 1;
-        end else if ( h == (HS_END + $signed(hs_offset) + $signed(hs_width) ) ) begin
+        end else if ( h == HS_OFF ) begin
             hsync <= 0;
         end
     end
