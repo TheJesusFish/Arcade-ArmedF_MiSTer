@@ -56,11 +56,14 @@ wire signed [10:0] hs_on  = $signed({2'b00, HS_START}) + hs_offset;
 wire signed [10:0] hs_off = $signed({2'b00, HS_END}) + hs_offset + hs_width;
 wire signed [10:0] vs_len = $signed({2'b00, VS_END - VS_START}) + vs_width;
 wire signed [10:0] vs_on  = $signed({2'b00, VS_START}) + vs_offset;
-wire signed [10:0] vs_off = vs_on + ( vs_len < 11'sd1 ? 11'sd1 : vs_len );
 
 wire [8:0] HS_ON  = wrap( hs_on,  HTOTAL );
 wire [8:0] HS_OFF = wrap( hs_off, HTOTAL );
-wire [8:0] VS_ON  = wrap( vs_on,  VTOTAL );
+
+// V-sync starts no earlier than the first blank line, where HDMI and rotation begin a frame.
+wire [8:0] VS_POS = wrap( vs_on, VTOTAL );
+wire [8:0] VS_ON  = ( VS_POS >= VBL_END && VS_POS < VBL_START ) ? VBL_START : VS_POS;
+wire signed [10:0] vs_off = $signed({2'b00, VS_ON}) + ( vs_len < 11'sd1 ? 11'sd1 : vs_len );
 wire [8:0] VS_OFF = wrap( vs_off, VTOTAL );
 
 reg [8:0] v;
